@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+    alb.ingress.kubernetes.io/subnets: subnet-0ad01dbd86c8bd3e6,subnet-07b57687fef791496
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: supermario-service
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: /sb
+            backend:
+              service:
+                name: sb-svc
+                port:
+                  number: 80
